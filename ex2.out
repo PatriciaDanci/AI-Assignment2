@@ -1,0 +1,134 @@
+============================== Mace4 =================================
+Mace4 (64) version 2009-11A, November 2009.
+Process 92 was started by denis on DESKTOP-P9L93MQ,
+Sun Dec  8 21:10:50 2024
+The command was "/mnt/c/Users/dandr/Desktop/LADR-2009-11A/bin/mace4 -f ex2.in".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file ex2.in
+
+
+formulas(assumptions).
+girl(x) -> -boy(x).
+girl(a) & girl(s) & girl(c) & boy(j) | girl(a) & girl(j) & girl(c) & boy(s) | girl(s) & girl(j) & girl(c) & boy(a) | girl(s) & girl(j) & girl(a) & boy(c) | boy(a) & boy(s) & boy(c) & girl(j) | boy(a) & boy(j) & boy(c) & girl(s) | boy(s) & boy(j) & boy(c) & girl(a) | boy(s) & boy(j) & boy(a) & girl(c).
+son(x,y) -> boy(y).
+son(c,s) | son(c,a).
+sister(x,y) -> girl(y).
+sister(j,a) | sister(j,c).
+brother(x,y) -> boy(y).
+daughter(x,y) -> girl(y).
+brother(s,j) | dauther(s,j) & -sister(j,c) & -sister(j,a) & -brother(j,c) & -brother(j,a).
+end_of_list.
+
+formulas(goals).
+end_of_list.
+
+============================== end of input ==========================
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 girl(x) -> -boy(x) # label(non_clause).  [assumption].
+2 girl(a) & girl(s) & girl(c) & boy(j) | girl(a) & girl(j) & girl(c) & boy(s) | girl(s) & girl(j) & girl(c) & boy(a) | girl(s) & girl(j) & girl(a) & boy(c) | boy(a) & boy(s) & boy(c) & girl(j) | boy(a) & boy(j) & boy(c) & girl(s) | boy(s) & boy(j) & boy(c) & girl(a) | boy(s) & boy(j) & boy(a) & girl(c) # label(non_clause).  [assumption].
+3 son(x,y) -> boy(y) # label(non_clause).  [assumption].
+4 sister(x,y) -> girl(y) # label(non_clause).  [assumption].
+5 brother(x,y) -> boy(y) # label(non_clause).  [assumption].
+6 daughter(x,y) -> girl(y) # label(non_clause).  [assumption].
+7 brother(s,j) | dauther(s,j) & -sister(j,c) & -sister(j,a) & -brother(j,c) & -brother(j,a) # label(non_clause).  [assumption].
+
+============================== end of process non-clausal formulas ===
+
+============================== CLAUSES FOR SEARCH ====================
+
+formulas(mace4_clauses).
+-girl(x) | -boy(x).
+girl(a) | girl(s) | boy(c) | boy(j).
+girl(a) | girl(s) | girl(j) | girl(c).
+girl(a) | girl(j) | boy(c) | boy(s).
+girl(a) | girl(c) | boy(s) | boy(j).
+girl(a) | boy(a).
+girl(s) | girl(j) | boy(a) | boy(c).
+girl(s) | boy(s).
+girl(c) | girl(s) | boy(a) | boy(j).
+girl(c) | girl(j) | boy(a) | boy(s).
+girl(c) | boy(c).
+boy(j) | girl(j).
+boy(j) | boy(s) | boy(a) | boy(c).
+-son(x,y) | boy(y).
+son(c,s) | son(c,a).
+-sister(x,y) | girl(y).
+sister(j,a) | sister(j,c).
+-brother(x,y) | boy(y).
+-daughter(x,y) | girl(y).
+brother(s,j) | dauther(s,j).
+brother(s,j) | -sister(j,c).
+brother(s,j) | -sister(j,a).
+brother(s,j) | -brother(j,c).
+brother(s,j) | -brother(j,a).
+end_of_list.
+
+============================== end of clauses for search =============
+
+% There are no natural numbers in the input.
+
+============================== DOMAIN SIZE 2 =========================
+
+============================== MODEL =================================
+
+interpretation( 2, [number=1, seconds=0], [
+
+        function(a, [ 0 ]),
+
+        function(c, [ 1 ]),
+
+        function(j, [ 0 ]),
+
+        function(s, [ 0 ]),
+
+        relation(boy(_), [ 1, 0 ]),
+
+        relation(girl(_), [ 0, 1 ]),
+
+        relation(brother(_,_), [
+			   1, 0,
+			   0, 0 ]),
+
+        relation(daughter(_,_), [
+			   0, 0,
+			   0, 0 ]),
+
+        relation(dauther(_,_), [
+			   0, 0,
+			   0, 0 ]),
+
+        relation(sister(_,_), [
+			   0, 1,
+			   0, 0 ]),
+
+        relation(son(_,_), [
+			   0, 0,
+			   1, 0 ])
+]).
+
+============================== end of model ==========================
+
+============================== STATISTICS ============================
+
+For domain size 2.
+
+Current CPU time: 0.00 seconds (total CPU time: 0.01 seconds).
+Ground clauses: seen=37, kept=37.
+Selections=22, assignments=32, propagations=61, current_models=1.
+Rewrite_terms=195, rewrite_bools=271, indexes=165.
+Rules_from_neg_clauses=0, cross_offs=0.
+
+============================== end of statistics =====================
+
+User_CPU=0.01, System_CPU=0.00, Wall_clock=0.
+
+Exiting with 1 model.
+
+Process 92 exit (max_models) Sun Dec  8 21:10:50 2024
+The process finished Sun Dec  8 21:10:50 2024

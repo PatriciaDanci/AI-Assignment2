@@ -1,0 +1,37 @@
+formulas(assumptions).
+p1 & p2 & p3.  % There are three people: p1 (A), p2 (B), and p3 (C), all present.
+t1 | t2 | t3.  % At least one person is the thief: t1 (A is thief), t2 (B is thief), or t3 (C is thief).
+
+% only one thief
+t1 -> -t2.     % If A is the thief (t1), B cannot be the thief (-t2).
+t1 -> -t3.     % If A is the thief (t1), C cannot be the thief (-t3).
+t2 -> -t1.     % If B is the thief (t2), A cannot be the thief (-t1).
+t2 -> -t3.     % If B is the thief (t2), C cannot be the thief (-t3).
+t3 -> -t1.     % If C is the thief (t3), A cannot be the thief (-t1).
+t3 -> -t2.     % If C is the thief (t3), B cannot be the thief (-t2).
+
+% adding the cops
+c1 & c2 | c2 & c3 | c1 & c3.  % At least two of the three people are cops: c1 (A is a cop), c2 (B is a cop), c3 (C is a cop).
+
+% assign job to people
+p1 -> (c1 | t1).  % A (p1) is either a cop (c1) or the thief (t1).
+p2 -> (c2 | t2).  % B (p2) is either a cop (c2) or the thief (t2).
+p3 -> (c3 | t3).  % C (p3) is either a cop (c3) or the thief (t3).
+
+% adding exclusions
+t1 -> (c2 & c3).  % If A is the thief (t1), then B and C must both be cops (c2 and c3).
+t2 -> (c1 & c3).  % If B is the thief (t2), then A and C must both be cops (c1 and c3).
+t3 -> (c1 & c2).  % If C is the thief (t3), then A and B must both be cops (c1 and c2).
+t1 -> -c1.        % If A is the thief (t1), A cannot also be a cop (-c1).
+t2 -> -c2.        % If B is the thief (t2), B cannot also be a cop (-c2).
+t3 -> -c3.        % If C is the thief (t3), C cannot also be a cop (-c3).
+
+% what they say
+p1 -> -t3.        % A (p1) says C is not the thief (-t3).
+p2 -> (t1 | t3).  % B (p2) says either A (t1) or C (t3) is the thief.
+p3 -> -t3.        % C (p3) says he is not the thief (-t3).
+
+end_of_list.
+
+formulas(goals).
+end_of_list.

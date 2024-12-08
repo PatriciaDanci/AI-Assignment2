@@ -1,0 +1,41 @@
+formulas(assumptions).
+
+% Gender constraints
+girl(x) -> -boy(x).
+
+% Exactly three are of one gender, one is opposite
+((girl(a) & girl(s) & girl(c) & boy(j)) 
+| (girl(a) & girl(j) & girl(c) &  boy(s)) 
+| (girl(s) & girl(j) & girl(c) &  boy(a)) 
+| (girl(s) & girl(j) & girl(a) & boy(c))
+| boy(a) & boy(s) & boy(c) & girl(j)
+| boy(a) & boy(j) & boy(c) & girl(s)
+| boy(s) & boy(j) & boy(c) & girl(a)
+| boy(s) & boy(j) & boy(a) & girl(c)).
+
+%y being x's son means y is a boy
+son(x,y) -> boy(y).
+
+%Charli's son is either Sam or Alex -> Sam or Alex is a boy
+son(c,s) | son(c, a).
+
+%y being x's sister means y is a girl 
+sister(x,y) -> girl(y).
+
+%Jordan's sister is either Alex or Charlie
+sister(j,a) | sister(j,c).
+
+%y being x's brother means y is a boy
+brother(x,y) -> boy(y).
+
+%y being x's daughter means y is a girl
+daughter(x,y) -> girl(y).
+
+%Jordan is either Sam's brother or Sam's only daughter 
+%if Jordan is Sam's ONLY daughter, Jordan can't have sisters or brothers
+brother(s,j) | (dauther(s,j) & -sister(j,c) & -sister(j,a) & -brother(j,c) & -brother(j,a)).
+
+end_of_list.
+
+formulas(goals).
+end_of_list.

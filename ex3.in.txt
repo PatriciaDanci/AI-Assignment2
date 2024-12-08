@@ -1,0 +1,45 @@
+formulas(assumptions).
+% Define basic types
+all x (wolf(x) -> animal(x)).             % All wolves are animals
+all x (fox(x) -> animal(x)).              % All foxes are animals
+all x (bird(x) -> animal(x)).             % All birds are animals
+all x (caterpillar(x) -> animal(x)).      % All caterpillars are animals
+all x (snail(x) -> animal(x)).            % All snails are animals
+all x (grain(x) -> plant(x)).             % All grains are plants
+
+% Existence assertions
+exists x wolf(x).                         % There exists at least one wolf
+exists x fox(x).                          % There exists at least one fox
+exists x bird(x).                         % There exists at least one bird
+exists x caterpillar(x).                  % There exists at least one caterpillar
+exists x snail(x).                        % There exists at least one snail
+exists x grain(x).                        % There exists at least one grain
+
+% Eating rules for animals
+all x (animal(x) -> (all y (plant(y) -> eats(x, y))) |
+          (all z (animal(z) & smaller(z, x) & 
+            (exists u (plant(u) & eats(z, u))) -> 
+            eats(x, z)))).                   % Either all plants are eaten by the animal, or smaller animals that eat plants are eaten by the animal
+          
+% Size ordering between caterpillars and birds
+all x all y (caterpillar(x) & bird(y) -> smaller(x, y)).  % Caterpillars are smaller than birds
+all x all y (snail(x) & bird(y) -> smaller(x, y)).       % Snails are smaller than birds
+all x all y (bird(x) & fox(y) -> smaller(x, y)).         % Birds are smaller than foxes
+all x all y (fox(x) & wolf(y) -> smaller(x, y)).         % Foxes are smaller than wolves
+
+% Eating rules for specific pairs
+all x all y (bird(x) & caterpillar(y) -> eats(x, y)).    % Birds eat caterpillars
+all x (caterpillar(x) -> (exists y (plant(y) & eats(x, y)))).  % Caterpillars eat plants
+all x (snail(x) -> (exists y (plant(y) & eats(x, y)))).     % Snails eat plants
+
+% Exclusion of eating for certain pairs
+all x all y (wolf(x) & fox(y) -> -eats(x, y)).            % Wolves do not eat foxes
+all x all y (wolf(x) & grain(y) -> -eats(x, y)).           % Wolves do not eat grains
+all x all y (bird(x) & snail(y) -> -eats(x, y)).           % Birds do not eat snails
+end_of_list.
+
+formulas(goals).
+% Goal: Find an animal-eating relationship
+exists x exists y (animal(x) & animal(y) & eats(x, y) & 
+                   (all z (Grain(z) -> eats(y, z)))).  % Find two animals where one eats the other and the other only eats grains
+end_of_list.
